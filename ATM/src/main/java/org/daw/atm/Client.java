@@ -32,7 +32,7 @@ public class Client {
     }
 
     public void resetIntents(int intentsFallits) {
-
+        
     }
 
     public String getDni() {
@@ -40,14 +40,29 @@ public class Client {
     }
 
     public void setDni(String dni) throws Exception {
-        String nums = dni.substring(0, 8);
-        char[] dniArray = dni.toCharArray();
-        if ( dni.charAt(8) < 'a' || dni.charAt(8) > 'z') throw new Exception("Ultima lletra incorrecta");
+        char[] lletres = { 'T', 'R', 'W', 'A', 'G', 'M' };
 
+        if ( dni == null ) {
+            throw new IllegalArgumentException("El DNI no pot ser null");
+        }
+        if (dni.length() != 9) {
+            throw new IllegalArgumentException("El DNI ha de tenir 9 dígits");
+        }            
+
+        int numero;
         try {
-            
-    } catch (Exception e) {}
-        this.dni = dni;
+            numero = Integer.parseInt(dni.substring(0, 8));
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Els primers 8 caràcters del DNI han de ser numeros");
+        }
+
+        char lletraCorrecta = lletres[numero % 23];
+        char lletraDni = Character.toUpperCase(dni.charAt(8));
+
+        if (lletraDni != lletraCorrecta) {
+            throw new IllegalArgumentException("La lletra del DNI no és correcta");
+        }
+        this.dni = dni.toUpperCase();
     }
 
     public String getNom() {
@@ -59,19 +74,20 @@ public class Client {
     }
 
     public String getPin() {
-        return pin;
+        return this.pin;
     }
 
-    public void setPin(String pin) throws Exception {
+    public void setPin(String pin) {
         // Comprovar que PIN es correcte
         // Numero 4 xifres
-        if (pin.length() != 4) throw new Exception("Llargada pin incorrecta");
+        if (pin==null) throw new IllegalArgumentException("El pin ha de tenir un valor correcte");
+        if (pin.length() != 4) throw new IllegalArgumentException("Llargada pin incorrecte");
+
         try {
-        int num = Integer.parseInt(pin);
-        this.pin = pin;
-        } 
-        catch(Exception e) {
-            throw new Exception("Pin incorrecte");
+            int num = Integer.parseInt(pin);
+            this.pin = pin;
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Pin incorrecte");
         }
     }
 

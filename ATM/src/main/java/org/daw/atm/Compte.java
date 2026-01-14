@@ -13,7 +13,7 @@ public class Compte {
     // atributs de la classe
     private String numero;
     private double saldo;
-    private String titular;
+    private Client titular;
     private double interesAnual;
     private static int comptador = 1;
     private static String prefix = "ES450-";
@@ -82,11 +82,11 @@ public class Compte {
         this.saldo = saldo;
     }
 
-    public String getTitular() {
+    public Client getTitular() {
         return titular;
     }
 
-    public void setTitular(String titular) {
+    public void setTitular(Client titular) {
         this.titular = titular;
     }
 

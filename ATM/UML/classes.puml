@@ -1,0 +1,48 @@
+@startuml
+class Client {
+    - dni: String
+    - nom: String
+    - pin: String
+    - intentsFallits: int
+    - bloquejat: boolean
+
+    + setDni(dni:String)
+    + setPin(pin:String)
+    + setNom(nom:String)
+    + getDni(): String
+    + getPin(): String
+    + getNom(): String
+    + isBloquejat: boolean
+
+}
+
+class Compte {
+    - numero: String
+    - saldo: double
+    - titular: String
+    - interesAnual: double
+    {static} - comptador: int
+    {static} - prefix: String
+
+    + Compte()
+    + Compte(saldo: double)
+
+    + calculaInteresAnual(): double
+    + ingressar(quantitat: double)
+    + retirar(quantitat: double): boolean
+    + transferencia(desti: Compte, quantitat: double): boolean
+
+    + getNumero(): String
+    + setNumero(numero: String)
+    + getSaldo(): double
+    + setSaldo(saldo: double)
+    + getTitular(): String
+    + setTitular(titular: String)
+    + getInteresAnual(): double
+    + setInteresAnual(interesAnual: double)
+
+}
+
+Client "1 " -- "1..* " Compte : Titular
+
+@enduml
