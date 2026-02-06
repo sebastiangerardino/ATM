@@ -9,7 +9,7 @@ public class CompteEstalvi extends Compte {
     private List<Moviment> moviments = new ArrayList<>();
 
     public CompteEstalvi(Client titular, double saldo, double saldoMinim) {
-        super(titular, saldo);
+        super(titular.getNom(), saldo);
         this.saldoMinim = saldoMinim;
     }
 

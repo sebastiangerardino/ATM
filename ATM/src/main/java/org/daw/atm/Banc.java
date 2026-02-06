@@ -1,13 +1,20 @@
 package org.daw.atm;
+import java.util.ArrayList;
 
 public class Banc {
 
     private String nom; 
-    private Client[] clients; 
-    private Compte[] comptes;
+    private ArrayList<Client> clients; 
+    private ArrayList<Compte> comptes;
 
     public Banc(String nom) {
         this.nom = nom;
+        clients = new ArrayList<>();
+        comptes = new ArrayList<>();
+        inicialitzarClients();
+    }
+
+    private void inicialitzarClients() {
 
     Client client1 = new Client("11111111S", "Fabiana", "1111");
     Client client2 = new Client("22222222F", "Sebastian", "2222");
@@ -105,5 +112,9 @@ public class Banc {
             }
         }
         return null;
+    }
+
+    public ArrayList<Client> getClients() {
+        return clients;
     }
 }
