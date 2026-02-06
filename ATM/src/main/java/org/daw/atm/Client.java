@@ -15,24 +15,25 @@ public class Client {
         this.intentsFallits = 0;
     }
 
-    public boolean comprovarPin(String pinIntroduit, int intentsFallits, boolean bloquejat) {
-        while (intentsFallits < 3 || bloquejat == false) {
-            if (pinIntroduit.equals(this.pin)) {
-                intentsFallits = 4;
-                return true;
-            }
-            else { 
-                intentsFallits++;
-                if (intentsFallits == 3) {
-                    bloquejat = true;
-                }
-            }
+    public boolean comprovarPin(String pinIntroduit) {
+        if (this.bloquejat) {
+            return false;
         }
-    return false;
+    
+        if (pinIntroduit.equals(this.pin)) {
+            return true;
+        } else {
+            this.intentsFallits++;
+            if (this.intentsFallits >= 3) {
+                this.bloquejat = true;
+            }
+            return false;
+        }
     }
 
-    public void resetIntents(int intentsFallits) {
-        
+    public void resetIntents() {
+        this.intentsFallits = 0;
+        this.bloquejat = false;
     }
 
     public String getDni() {
