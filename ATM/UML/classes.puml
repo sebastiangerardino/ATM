@@ -1,48 +1,69 @@
 @startuml
+skinparam classAttributeIconSize 0
+
 class Client {
     - dni: String
-    - nom: String
+    - nombre: String
     - pin: String
-    - intentsFallits: int
-    - bloquejat: boolean
+    - intentosFallidos: int
+    - bloqueado: boolean
 
-    + setDni(dni:String)
-    + setPin(pin:String)
-    + setNom(nom:String)
+    + setDni(dni: String)
+    + setPin(pin: String)
+    + setNombre(nombre: String)
     + getDni(): String
-    + getPin(): String
-    + getNom(): String
-    + isBloquejat: boolean
-
+    + getNombre(): String
+    + isBloqueado(): boolean
 }
 
-class Compte {
-    - numero: String
-    - saldo: double
-    - titular: String
-    - interesAnual: double
-    {static} - comptador: int
-    {static} - prefix: String
+class Compte{
+    # numero: String
+    # titular: String
+    # saldo: double
+    # interesesAnuales: double
+    {static} - contador: int
+    {static} - prefijo: String
 
-    + Compte()
-    + Compte(saldo: double)
-
+    + Cuenta()
+    + Cuenta(saldo: double)
     + calculaInteresAnual(): double
-    + ingressar(quantitat: double)
-    + retirar(quantitat: double): boolean
-    + transferencia(desti: Compte, quantitat: double): boolean
-
+    + ingresar(cantidad: double): void
+    + retirar(cantidad: double): boolean
+    + transferencia(destino: Cuenta, cantidad: double): boolean
     + getNumero(): String
-    + setNumero(numero: String)
     + getSaldo(): double
-    + setSaldo(saldo: double)
-    + getTitular(): String
-    + setTitular(titular: String)
-    + getInteresAnual(): double
-    + setInteresAnual(interesAnual: double)
-
 }
 
-Client "1 " -- "1..* " Compte : Titular
+class Banc {
+    - nombre: String
+    -clients
+    -comptes
+    +validarPin
+    +ingressar
+    +retirar+transferencia
+}
+
+class CompteCorrent {
+    - limiteDescubierto: double
+}
+
+class CompteEstalvi {
+    - saldoMinimo: double
+}
+
+class Cajero {
+    + validarPin(c: Cliente, pin: String): boolean
+    + consultarSaldo(cta: Cuenta): double
+}
+
+
+Client "1" -- "1..*" Compte : es titular de >
+Banc "1" *-- "*" Client : tiene >
+Banc "1" *-- "*" Compte : gestiona >
+Cajero --> Banc : conectado a
+Cajero --> Client : interactúa con
+
+Compte <|-- CompteCorrent
+Compte <|-- CompteEstalvi
 
 @enduml
